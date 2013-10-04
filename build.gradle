@@ -1,0 +1,42 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.yammer.dropwizard:dropwizard-views:0.6.2',
+            'com.yammer.dropwizard:dropwizard-core:0.6.2',
+            'com.yammer.dropwizard:dropwizard-client:0.6.2'
+}
+
+idea {
+    project {
+        jdkName = '1.7'
+        languageLevel = '1.7'
+    }
+}
+
+ext.mainclass = 'ca.morgantini.dropwizard.template'
+
+task copyToLib(dependsOn: jar, type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.runtime
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': project.mainclass
+        def manifestClasspath = configurations.runtime.collect { 'lib/' + it.getName() }.join(' ')
+        attributes 'Class-Path': manifestClasspath
+    }
+
+    archiveName = "${baseName}.jar"
+
+    destinationDir = file("$buildDir/output")
+}
+
+task zip(dependsOn: copyToLib, type: Zip) {
+    from "$buildDir/output"
+}
