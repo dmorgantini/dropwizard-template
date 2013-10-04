@@ -8,7 +8,9 @@ repositories {
 dependencies {
     compile 'com.yammer.dropwizard:dropwizard-views:0.6.2',
             'com.yammer.dropwizard:dropwizard-core:0.6.2',
-            'com.yammer.dropwizard:dropwizard-client:0.6.2'
+            'com.yammer.dropwizard:dropwizard-client:0.6.2',
+            'com.google.inject:guice:3.0',
+            'com.sun.jersey.contribs:jersey-guice:1.15'
 }
 
 idea {
