@@ -15,7 +15,10 @@ mv ./src/main/java/ca/morgantini/dropwizard/template/ ./src/main/java/ca/morgant
 
 cd ./src/main/java/ca/morgantini/dropwizard/${newName}
 
-sed -i "s/\.template/\.${newName}/g" */*
-
+for file in *.java **/*.java
+do
+    sed "s/\.template/\.${newName}/g" ${file} > ${file}
+    sed "s/TemplateApplication/${newName}Application/g" ${file} > ${file}
+done
 
 
